@@ -6,6 +6,8 @@
 #include "GameFramework/MovementComponent.h"
 #include "DoorMovementComponent.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDoorMoved, float, Delta);
+
 /**
  * 
  */
@@ -46,6 +48,12 @@ class DOORMOVEMENT_API UDoorMovementComponent : public UMovementComponent
 	//Apply scale to the OpenOffset, othewise it will always be in world space 
 	UPROPERTY(Category = "Door Movement", BlueprintReadWrite, EditAnywhere)
 	bool UseScale;
+
+	/** Delegate that will be called when the Door has moved. 
+		Returns the difference in position (0-1). 
+		On stop returns 0 **/
+	UPROPERTY(BlueprintAssignable, Category = "Door Movement", meta = (DisplayName = "Door Moved"))
+	FDoorMoved DoorMovedDelegate;
 
 #if WITH_EDITOR
 	//~ Begin UObject Interface.
