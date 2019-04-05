@@ -38,6 +38,7 @@ void UDoorMovementComponent::TickComponent(float DeltaTime, enum ELevelTick Tick
 
 	if (Position == NextPosition)
 	{
+		DoorMovedDelegate.Broadcast(0.0f);
 		Deactivate();
 		return;
 	}
@@ -60,6 +61,8 @@ void UDoorMovementComponent::TickComponent(float DeltaTime, enum ELevelTick Tick
 
 	const bool bEnableCollision = false;
 	MoveUpdatedComponent(DeltaLocation, OldRotation, bEnableCollision);
+
+	DoorMovedDelegate.Broadcast(Position - OldPosition);
 }
 
 void UDoorMovementComponent::SetPosition(float NewPosition)
